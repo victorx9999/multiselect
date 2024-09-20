@@ -1,0 +1,34 @@
+<h1>DROPDOWN MULTISELECT</h1>
+<div class="dropdown">
+  <div class="dropdown-header" (click)="toggleDropdown()">
+    <span *ngIf="selectedOptions.length === 0">Selecione as opções</span>
+    <span *ngIf="selectedOptions.length > 0">
+      {{ getSelectedLabels() }}
+    </span>
+    <span class="arrow">{{ dropdownOpen ? '▲' : '▼' }}</span>
+  </div>
+
+  <div class="dropdown-body" *ngIf="dropdownOpen">
+    <div class="input-container">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="searchTerm"
+        (input)="filterOptions()"
+      />
+    </div>
+
+    <div class="options-container">
+      <div *ngFor="let option of filteredOptions; trackBy: trackByFn">
+        <label>
+          <input
+            type="checkbox"
+            [checked]="isSelected(option)"
+            (change)="onSelectOption(option)"
+          />
+          {{ option.label || option.value }}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
